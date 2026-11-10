@@ -172,6 +172,9 @@ export default function WishForm({ songs, baseUrl, initial }: Props) {
   }
 
   if (created) {
+    const currentUrl = typeof window !== 'undefined' ? window.location.origin : baseUrl;
+    const wishUrl = `${currentUrl}/wish/${created.slug}`;
+
     return (
       <div className="card space-y-4 sm:space-y-6 text-center py-6 sm:py-8 px-4">
         <div className="space-y-2">
@@ -185,11 +188,11 @@ export default function WishForm({ songs, baseUrl, initial }: Props) {
           </p>
         </div>
         <div className="flex justify-center">
-          <ShareButtons slug={created.slug} baseUrl={baseUrl} name={name} />
+          <ShareButtons slug={created.slug} baseUrl={currentUrl} name={name} />
         </div>
         <div className="rounded-2xl bg-gradient-to-br from-pink-50 to-purple-50 p-4 sm:p-6 border border-pink-200">
           <p className="text-xs text-ink/60 mb-2">Your unique link:</p>
-          <code className="block bg-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm break-all">{baseUrl}/wish/{created.slug}</code>
+          <code className="block bg-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm break-all">{wishUrl}</code>
         </div>
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3 border-t border-ink/10 pt-4 sm:pt-6">
           <Link href={`/wish/${created.slug}`} target="_blank" className="btn btn-soft flex items-center gap-2 text-xs sm:text-sm">

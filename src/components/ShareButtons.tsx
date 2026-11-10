@@ -2,12 +2,13 @@
 import { useEffect, useState } from 'react';
 
 export default function ShareButtons({ slug, baseUrl, name }: { slug: string; baseUrl: string; name: string }) {
-  const [url, setUrl] = useState(baseUrl ? `${baseUrl}/wish/${slug}` : '');
+  const [url, setUrl] = useState('');
   const [copied, setCopied] = useState(false);
   const [canShare, setCanShare] = useState(false);
 
   useEffect(() => {
-    if (!baseUrl) setUrl(`${window.location.origin}/wish/${slug}`);
+    const origin = typeof window !== 'undefined' ? window.location.origin : baseUrl;
+    setUrl(`${origin}/wish/${slug}`);
     setCanShare(typeof navigator.share === 'function');
   }, [baseUrl, slug]);
 
